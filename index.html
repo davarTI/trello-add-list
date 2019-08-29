@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="app" class="container mt-5">
+        <div class="row">
+            <div class="col-md-4 mt-3" v-for="(list, index) in lists" :key="index">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h4>{{list.name}}</h4>
+                            <!-- <button v-if="list.status == 'saved'" class="btn btn-sm btn-danger">
+                                Eliminar
+                            </button> -->
+                            <button :class="list.status == 'creating' ? 'btn-warning' : 'btn-danger'" class="btn btn-sm"
+                                @click="removeList(index)">
+                                {{ list.status == 'creating' ? 'Cancelar' : 'Eliminar' }}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form @submit.prevent="saveList(list)" action="/">
+                            <div class="form-group" v-if="list.status == 'creating'">
+                                <input class="form-control" placeholder="Nombre de la lista" v-model="list.name">
+                            </div>
+                            <button v-if="list.status == 'creating'" class="btn btn-primary btn-block">
+                                Guardar
+                            </button>
+                        </form>
+                    </div>
+                    <div v-if="list.status != 'creating'">
+                        <a href="#" id="title-card" style="font-size: 1rem; text-decoration: none; display: block;" @click="addCard" class="pl-2 py-2">Add a title</a>
+                        <div v-for="title in titles" style="padding: 5px">
+                            <div style="display: block">{{title.content}}</div>
+                        </div>
+                        <div id="div-card" style="display: none" class="px-2 py-2">
+                            <input class="form-control" placeholder="Enter a title" style="width: 100%; height: 54px;" v-model="description"></input>
+                            <div class="d-flex py-2">
+                                <button class="px-2 py-2" @click="addTitle">Add title</button>
+                                <a href="#" style="font-size: 1.5rem; text-decoration: none" @click="cancel">&nbsp X</a>
+                            </div>
+                        </div>
+                        <a href="#" id="title-card-hide" style="font-size: 1rem; text-decoration: none; display: none;" @click="addCard" class="py-2 px-2">Add another title</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-3">
+                <button class="btn rounded-0 btn-outline-dark btn-block" @click="addList">
+                    Agregar lista
+                </button><br>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div id="app1">
+        <a href="#" id="title-card" style="font-size: 1rem; text-decoration: none; display: block;" @click="addCard">Add a card</a>
+        <div v-for="title in titles">
+            <div style="display: block">{{title.content}}</div>
+        </div>
+        <div id="div-card" style="display: none">
+            <input placeholder="Enter a title" style="width: 20%; height: 54px;" v-model="description"></input>
+            <div class="d-flex">
+                <button class="" @click="addTitle">Add Card</button>
+                <a href="#" style="font-size: 1.5rem; text-decoration: none" @click="cancel">&nbsp X</a>
+            </div>
+        </div>
+        <a href="#" id="title-card-hide" style="font-size: 1rem; text-decoration: none; display: none;" @click="addCard">Add another card</a>
+    </div> -->
+
+
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./javascript.js"></script>
+</body>
+
+</html>
